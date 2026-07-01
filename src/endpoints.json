@@ -955,7 +955,7 @@
   {
     "pathPattern": "/sites/{site-id}/onenote/sectionGroups/{sectionGroup-id}/sections",
     "method": "get",
-    "toolName": "list-site-onenote-section-group-sections",
+    "toolName": "list-site-section-group-sections",
     "presets": ["onenote", "work"],
     "workScopes": ["Notes.Read"]
   },
