@@ -934,21 +934,21 @@
   {
     "pathPattern": "/sites/{site-id}/onenote/notebooks/{notebook-id}/sections",
     "method": "get",
-    "toolName": "list-sharepoint-site-onenote-notebook-sections",
+    "toolName": "list-site-notebook-sections",
     "presets": ["onenote", "work"],
     "workScopes": ["Notes.Read"]
   },
   {
     "pathPattern": "/sites/{site-id}/onenote/sections/{onenoteSection-id}/pages",
     "method": "get",
-    "toolName": "list-sharepoint-site-onenote-section-pages",
+    "toolName": "list-site-onenote-section-pages",
     "presets": ["onenote", "work"],
     "workScopes": ["Notes.Read"]
   },
   {
     "pathPattern": "/sites/{site-id}/onenote/notebooks/{notebook-id}/sectionGroups",
     "method": "get",
-    "toolName": "list-site-onenote-notebook-section-groups",
+    "toolName": "list-site-notebook-section-groups",
     "presets": ["onenote", "work"],
     "workScopes": ["Notes.Read"]
   },
@@ -962,7 +962,7 @@
   {
     "pathPattern": "/sites/{site-id}/onenote/sectionGroups/{sectionGroup-id}/sectionGroups",
     "method": "get",
-    "toolName": "list-site-onenote-section-group-subgroups",
+    "toolName": "list-site-section-group-subgroups",
     "presets": ["onenote", "work"],
     "workScopes": ["Notes.Read"]
   },
