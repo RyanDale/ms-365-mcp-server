@@ -159,6 +159,9 @@ export function createAndSaveSimplifiedOpenAPI(
     simplifyAnyOfInPaths(openApiSpec.paths);
   }
 
+  console.log('✂️  Stripping read-only and navigation properties from request body schemas...');
+  stripReadOnlyFromRequestBodies(openApiSpec);
+
   console.log('🧹 Pruning unused schemas...');
   const usedSchemas = findUsedSchemas(openApiSpec);
   pruneUnusedSchemas(openApiSpec, usedSchemas);
@@ -277,6 +280,175 @@ function simplifyAnyOfSchema(schema, context) {
     } options]`.trim();
     delete schema.anyOf;
   }
+}
+
+/**
+ * For POST/PATCH request bodies, strip properties that are read-only or navigation-only.
+ * This dramatically reduces token usage because Microsoft's OpenAPI spec includes the full
+ * entity type (with server-generated fields and navigation properties) as the request body,
+ * even though only a small subset of properties are writable on create/update.
+ *
+ * A property is stripped if:
+ * - It has readOnly: true (OpenAPI standard)
+ * - Its description contains "Read-only" (Microsoft's convention)
+ * - It is a collection navigation property (array with items.$ref to an entity)
+ * - It is a single-valued navigation property pointing to a known read-only entity pattern
+ */
+function stripReadOnlyFromRequestBodies(openApiSpec) {
+  const schemas = openApiSpec.components?.schemas || {};
+  const paths = openApiSpec.paths || {};
+
+  // Collect schema names used as request bodies for write operations (POST/PATCH/PUT)
+  const writeBodySchemas = new Set();
+  Object.values(paths).forEach((pathItem) => {
+    if (!pathItem || typeof pathItem !== 'object') return;
+    Object.entries(pathItem).forEach(([method, operation]) => {
+      if (!operation || typeof operation !== 'object') return;
+      if (!['post', 'patch', 'put'].includes(method)) return;
+
+      const bodyContent = operation.requestBody?.content?.['application/json'];
+      if (bodyContent?.schema?.$ref) {
+        const schemaName = bodyContent.schema.$ref.replace('#/components/schemas/', '');
+        writeBodySchemas.add(schemaName);
+      }
+    });
+  });
+
+  if (writeBodySchemas.size === 0) return;
+
+  let totalStripped = 0;
+
+  for (const schemaName of writeBodySchemas) {
+    const schema = schemas[schemaName];
+    if (!schema?.properties) continue;
+
+    const originalCount = Object.keys(schema.properties).length;
+    const toRemove = [];
+
+    for (const [propName, prop] of Object.entries(schema.properties)) {
+      if (isReadOnlyProperty(prop, propName)) {
+        toRemove.push(propName);
+      }
+    }
+
+    for (const propName of toRemove) {
+      delete schema.properties[propName];
+    }
+
+    // Also remove stripped properties from required arrays
+    if (schema.required && toRemove.length > 0) {
+      schema.required = schema.required.filter((r) => !toRemove.includes(r));
+      if (schema.required.length === 0) delete schema.required;
+    }
+
+    if (toRemove.length > 0) {
+      totalStripped += toRemove.length;
+      console.log(
+        `   ${schemaName}: stripped ${toRemove.length}/${originalCount} read-only/nav properties`
+      );
+    }
+  }
+
+  console.log(
+    `   Total: stripped ${totalStripped} properties from ${writeBodySchemas.size} request body schemas`
+  );
+}
+
+// Server-generated fields that are never writable on create/update.
+// The Graph API inconsistently marks these as "Read-only" in descriptions.
+const SERVER_GENERATED_FIELDS = new Set([
+  'id',
+  'createdDateTime',
+  'lastModifiedDateTime',
+  'createdBy',
+  'lastModifiedBy',
+  'webUrl',
+  '@odata.type',
+]);
+
+function isReadOnlyProperty(prop, propName) {
+  if (!prop || typeof prop !== 'object') return false;
+
+  // OpenAPI standard readOnly marker
+  if (prop.readOnly === true) return true;
+
+  // Microsoft Graph convention: "Read-only." in description
+  if (prop.description && /\bRead-only\b/i.test(prop.description)) return true;
+
+  // Well-known server-generated fields
+  if (SERVER_GENERATED_FIELDS.has(propName)) return true;
+
+  // Collection navigation properties: arrays whose items reference another entity.
+  // These are server-managed relationships (e.g. messages, members, filesFolder contents)
+  // that cannot be set during create/update.
+  if (prop.type === 'array' && prop.items?.$ref) return true;
+
+  // Single-valued navigation properties pointing to entities are also typically read-only
+  // (e.g. filesFolder → driveItem). We identify these by $ref to a microsoft.graph.* schema
+  // that looks like a heavy entity (has its own relationships). However, we preserve
+  // lightweight value-type refs (e.g. body → itemBody, location → location) which ARE writable.
+  // Heuristic: navigation properties typically have names ending in common suffixes
+  // or reference entity types (entities that inherit from microsoft.graph.entity).
+  if (prop.$ref && isNavigationRef(prop.$ref, propName)) return true;
+
+  // anyOf pattern where one option is a $ref to an entity (nullable navigation property)
+  if (prop.anyOf && Array.isArray(prop.anyOf)) {
+    const refItem = prop.anyOf.find((item) => item.$ref);
+    if (refItem && isNavigationRef(refItem.$ref, propName)) return true;
+  }
+
+  return false;
+}
+
+// Known entity-type suffixes in Microsoft Graph that indicate a navigation property
+// (as opposed to a writable complex type like itemBody, location, dateTimeTimeZone, etc.)
+const NAVIGATION_ENTITY_PATTERNS = [
+  /\.drive$/,
+  /\.driveItem$/,
+  /\.site$/,
+  /\.list$/,
+  /\.listItem$/,
+  /\.user$/,
+  /\.group$/,
+  /\.team$/,
+  /\.channel$/,
+  /\.chatMessage$/,
+  /\.conversation$/,
+  /\.conversationThread$/,
+  /\.conversationMember$/,
+  /\.post$/,
+  /\.event$/,
+  /\.calendar$/,
+  /\.contactFolder$/,
+  /\.contact$/,
+  /\.message$/,
+  /\.mailFolder$/,
+  /\.notebook$/,
+  /\.onenoteSection$/,
+  /\.onenotePage$/,
+  /\.plannerTask$/,
+  /\.plannerPlan$/,
+  /\.plannerBucket$/,
+  /\.subscription$/,
+  /\.permission$/,
+  /\.thumbnail$/,
+  /\.thumbnailSet$/,
+  /\.sharedDriveItem$/,
+  /\.teamsApp$/,
+  /\.teamsTab$/,
+  /\.teamsAppInstallation$/,
+  /\.chatMessageHostedContent$/,
+  /\.offerShiftRequest$/,
+  /\.openShift$/,
+  /\.shift$/,
+  /\.timeOff$/,
+  /\.schedulingGroup$/,
+];
+
+function isNavigationRef(ref, propName) {
+  if (!ref) return false;
+  const schemaName = ref.replace('#/components/schemas/', '');
+  return NAVIGATION_ENTITY_PATTERNS.some((pattern) => pattern.test(schemaName));
 }
 
 function flattenComplexSchemasRecursively(schemas) {

@@ -104,9 +104,6 @@ const microsoft_graph_userAccountInformation = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -115,9 +112,6 @@ const microsoft_graph_userAccountInformation = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -191,9 +185,6 @@ const microsoft_graph_itemAddress = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -202,9 +193,6 @@ const microsoft_graph_itemAddress = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -235,9 +223,6 @@ const microsoft_graph_personAnnualEvent = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -246,9 +231,6 @@ const microsoft_graph_personAnnualEvent = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -257,10 +239,7 @@ const microsoft_graph_personAnnualEvent = z
       .array(microsoft_graph_profileSourceAnnotation)
       .describe('Where the values within an entity originated if synced from another source.')
       .optional(),
-    date: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .nullish(),
+    date: z.string().nullish(),
     displayName: z.string().nullish(),
     type: microsoft_graph_personAnnualEventType.optional(),
   })
@@ -272,9 +251,6 @@ const microsoft_graph_personAward = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -283,9 +259,6 @@ const microsoft_graph_personAward = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -296,11 +269,7 @@ const microsoft_graph_personAward = z
       .optional(),
     description: z.string().describe('Descpription of the award or honor.').nullish(),
     displayName: z.string().describe('Name of the award or honor.').nullish(),
-    issuedDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the award or honor was granted.')
-      .nullish(),
+    issuedDate: z.string().describe('The date that the award or honor was granted.').nullish(),
     issuingAuthority: z.string().describe('Authority which granted the award or honor.').nullish(),
     thumbnailUrl: z
       .string()
@@ -316,9 +285,6 @@ const microsoft_graph_personCertification = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -327,9 +293,6 @@ const microsoft_graph_personCertification = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -344,23 +307,11 @@ const microsoft_graph_personCertification = z
       .nullish(),
     description: z.string().describe('Description of the certification.').nullish(),
     displayName: z.string().describe('Title of the certification.').nullish(),
-    endDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the certification expires.')
-      .nullish(),
-    issuedDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the certification was issued.')
-      .nullish(),
+    endDate: z.string().describe('The date that the certification expires.').nullish(),
+    issuedDate: z.string().describe('The date that the certification was issued.').nullish(),
     issuingAuthority: z.string().describe('Authority which granted the certification.').nullish(),
     issuingCompany: z.string().describe('Company which granted the certification.').nullish(),
-    startDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the certification became valid.')
-      .nullish(),
+    startDate: z.string().describe('The date that the certification became valid.').nullish(),
     thumbnailUrl: z
       .string()
       .describe('URL referencing a thumbnail of the certification.')
@@ -420,9 +371,6 @@ const microsoft_graph_educationalActivity = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -431,9 +379,6 @@ const microsoft_graph_educationalActivity = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -444,19 +389,16 @@ const microsoft_graph_educationalActivity = z
       .optional(),
     completionMonthYear: z
       .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
       .describe('The month and year the user graduated or completed the activity.')
       .nullish(),
     endMonthYear: z
       .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
       .describe('The month and year the user completed the educational activity referenced.')
       .nullish(),
     institution: microsoft_graph_institutionData.optional(),
     program: microsoft_graph_educationalActivityDetail.optional(),
     startMonthYear: z
       .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
       .describe('The month and year the user commenced the activity referenced.')
       .nullish(),
   })
@@ -469,9 +411,6 @@ const microsoft_graph_itemEmail = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -480,9 +419,6 @@ const microsoft_graph_itemEmail = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -506,9 +442,6 @@ const microsoft_graph_personInterest = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -517,9 +450,6 @@ const microsoft_graph_personInterest = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -565,9 +495,6 @@ const microsoft_graph_languageProficiency = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -576,9 +503,6 @@ const microsoft_graph_languageProficiency = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -615,9 +539,6 @@ const microsoft_graph_personName = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -626,9 +547,6 @@ const microsoft_graph_personName = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -677,9 +595,6 @@ const microsoft_graph_personAnnotation = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -688,9 +603,6 @@ const microsoft_graph_personAnnotation = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -711,9 +623,6 @@ const microsoft_graph_itemPatent = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -722,9 +631,6 @@ const microsoft_graph_itemPatent = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -736,11 +642,7 @@ const microsoft_graph_itemPatent = z
     description: z.string().describe('Descpription of the patent or filing.').nullish(),
     displayName: z.string().describe('Title of the patent or filing.').nullish(),
     isPending: z.boolean().describe('Indicates the patent is pending.').nullish(),
-    issuedDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the patent was granted.')
-      .nullish(),
+    issuedDate: z.string().describe('The date that the patent was granted.').nullish(),
     issuingAuthority: z.string().describe('Authority that granted the patent.').nullish(),
     number: z.string().describe('The patent number.').nullish(),
     webUrl: z.string().describe('URL referencing the patent or filing.').nullish(),
@@ -765,9 +667,6 @@ const microsoft_graph_itemPhone = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -776,9 +675,6 @@ const microsoft_graph_itemPhone = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -858,11 +754,7 @@ const microsoft_graph_positionDetail = z
     description: z.string().describe('A description for the position in question.').nullish(),
     employeeId: z.string().describe('The identifier assigned to the employee.').nullish(),
     employeeType: z.string().describe('The type of employment for the position.').nullish(),
-    endMonthYear: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date when the position ended.')
-      .nullish(),
+    endMonthYear: z.string().describe('The date when the position ended.').nullish(),
     jobTitle: z.string().describe('The title of the position.').nullish(),
     layer: z
       .number()
@@ -874,11 +766,7 @@ const microsoft_graph_positionDetail = z
     role: z.string().describe('The role the position entailed.').nullish(),
     secondaryJobTitle: z.string().describe('An optional job title for the position.').nullish(),
     secondaryRole: z.string().describe('An optional role for the position entailed.').nullish(),
-    startMonthYear: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The start date of the position.')
-      .nullish(),
+    startMonthYear: z.string().describe('The start date of the position.').nullish(),
     summary: z.string().describe('The summary of the position.').nullish(),
   })
   .passthrough();
@@ -889,9 +777,6 @@ const microsoft_graph_workPosition = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -900,9 +785,6 @@ const microsoft_graph_workPosition = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -931,9 +813,6 @@ const microsoft_graph_projectParticipation = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -942,9 +821,6 @@ const microsoft_graph_projectParticipation = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -986,9 +862,6 @@ const microsoft_graph_itemPublication = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -997,9 +870,6 @@ const microsoft_graph_itemPublication = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1010,11 +880,7 @@ const microsoft_graph_itemPublication = z
       .optional(),
     description: z.string().describe('Description of the publication.').nullish(),
     displayName: z.string().describe('Title of the publication.').nullish(),
-    publishedDate: z
-      .string()
-      .regex(/^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .describe('The date that the publication was published.')
-      .nullish(),
+    publishedDate: z.string().describe('The date that the publication was published.').nullish(),
     publisher: z.string().describe('Publication or publisher for the publication.').nullish(),
     thumbnailUrl: z.string().describe('URL referencing a thumbnail of the publication.').nullish(),
     webUrl: z.string().describe('URL referencing the publication.').nullish(),
@@ -1035,9 +901,6 @@ const microsoft_graph_skillProficiency = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1046,9 +909,6 @@ const microsoft_graph_skillProficiency = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1094,9 +954,6 @@ const microsoft_graph_webAccount = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1105,9 +962,6 @@ const microsoft_graph_webAccount = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1142,9 +996,6 @@ const microsoft_graph_personWebsite = z
     createdBy: microsoft_graph_identitySet.optional(),
     createdDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1153,9 +1004,6 @@ const microsoft_graph_personWebsite = z
     lastModifiedBy: microsoft_graph_identitySet.optional(),
     lastModifiedDateTime: z
       .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
       .datetime({ offset: true })
       .describe('Provides the dateTimeOffset for when the entity was created.')
       .nullish(),
@@ -1280,14 +1128,7 @@ const microsoft_graph_ODataErrors_InnerError = z
       .string()
       .describe('Client request Id as sent by the client application.')
       .nullish(),
-    date: z
-      .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
-      .datetime({ offset: true })
-      .describe('Date when the error occured.')
-      .nullish(),
+    date: z.string().datetime({ offset: true }).describe('Date when the error occured.').nullish(),
   })
   .passthrough();
 const microsoft_graph_ODataErrors_MainError = z
@@ -1302,97 +1143,24 @@ const microsoft_graph_ODataErrors_MainError = z
 const microsoft_graph_ODataErrors_ODataError = z
   .object({ error: microsoft_graph_ODataErrors_MainError })
   .passthrough();
-const microsoft_graph_plannerTaskChatMentionType = z.enum([
-  'user',
-  'application',
-  'unknownFutureValue',
-]);
-const microsoft_graph_plannerTaskChatMention = z
-  .object({
-    mentioned: z.string().describe('The ID of the mentioned user.').nullish(),
-    mentionType: microsoft_graph_plannerTaskChatMentionType.optional(),
-    position: z
-      .number()
-      .gte(-2147483648)
-      .lte(2147483647)
-      .describe('The zero-based position of the mention in the message content.')
-      .optional(),
-  })
-  .passthrough();
 const microsoft_graph_plannerTaskChatMessageType = z.enum([
   'richTextHtml',
   'plainText',
   'unknownFutureValue',
 ]);
-const microsoft_graph_plannerTaskChatReactionEvent = z
-  .object({
-    createdBy: microsoft_graph_identitySet.optional(),
-    createdDateTime: z
-      .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
-      .datetime({ offset: true })
-      .describe(
-        'The date and time when the reaction was added. The timestamp type represents date and time information using ISO 8601 format and is always in UTC. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.'
-      )
-      .optional(),
-  })
-  .passthrough();
-const microsoft_graph_plannerTaskChatReaction = z
-  .object({
-    reactionEvents: z.array(microsoft_graph_plannerTaskChatReactionEvent).optional(),
-    reactionType: z
-      .string()
-      .describe('The type of reaction, such as like, heart, or emoji characters.')
-      .nullish(),
-  })
-  .passthrough();
 const microsoft_graph_plannerTaskChatMessage = z
   .object({
-    id: z.string().describe('The unique identifier for an entity. Read-only.').optional(),
     content: z
       .string()
       .describe('The content of the chat message. Supports plain text and sanitized HTML.')
       .nullish(),
-    createdBy: microsoft_graph_identitySet.optional(),
-    createdDateTime: z
-      .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
-      .datetime({ offset: true })
-      .describe(
-        'The date and time when the message was created. The timestamp type represents date and time information using ISO 8601 format and is always in UTC. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.'
-      )
-      .optional(),
-    deletedDateTime: z
-      .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
-      .datetime({ offset: true })
-      .nullish(),
-    editedDateTime: z
-      .string()
-      .regex(
-        /^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$/
-      )
-      .datetime({ offset: true })
-      .nullish(),
-    mentions: z
-      .array(microsoft_graph_plannerTaskChatMention)
-      .describe('The list of mentions in the message.')
-      .optional(),
+    deletedDateTime: z.string().datetime({ offset: true }).nullish(),
+    editedDateTime: z.string().datetime({ offset: true }).nullish(),
     messageType: microsoft_graph_plannerTaskChatMessageType.optional(),
     parentEntityId: z
       .string()
       .describe('The ID of the parent plannerTask that this message belongs to.')
       .nullish(),
-    reactions: z
-      .array(microsoft_graph_plannerTaskChatReaction)
-      .describe('The reactions on the message.')
-      .optional(),
   })
   .passthrough();
 const microsoft_graph_plannerTaskChatMessageCollectionResponse = z
@@ -1456,11 +1224,7 @@ export const schemas = {
   microsoft_graph_ODataErrors_InnerError,
   microsoft_graph_ODataErrors_MainError,
   microsoft_graph_ODataErrors_ODataError,
-  microsoft_graph_plannerTaskChatMentionType,
-  microsoft_graph_plannerTaskChatMention,
   microsoft_graph_plannerTaskChatMessageType,
-  microsoft_graph_plannerTaskChatReactionEvent,
-  microsoft_graph_plannerTaskChatReaction,
   microsoft_graph_plannerTaskChatMessage,
   microsoft_graph_plannerTaskChatMessageCollectionResponse,
 };

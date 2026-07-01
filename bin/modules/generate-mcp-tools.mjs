@@ -56,6 +56,24 @@ export function generateMcpTools(openapiTrimmedFile, clientFilePath) {
       "z.string().describe('Base64-encoded file content. The server decodes it and PUTs the raw bytes to Microsoft Graph.')"
     );
 
+    // Strip verbose .regex(...) patterns (datetime, UUID, duration, time, date) that
+    // produce bulky "pattern" fields in JSON Schema without helping the LLM. The
+    // co-located .datetime() / .describe() already communicates the expected format.
+    // Short functional patterns (e.g. /\S/) are preserved.
+    console.log('Stripping verbose .regex() patterns (saves ~2.5K tokens in tool schemas)...');
+    clientCode = clientCode.replace(
+      /\s*\.regex\(\s*\/\^?\[0-9[^\n]*\/\s*\)/g,
+      ''
+    );
+    clientCode = clientCode.replace(
+      /\s*\.regex\(\s*\/\^-\?P[^\n]*\/\s*\)/g,
+      ''
+    );
+    clientCode = clientCode.replace(
+      /\s*\.regex\(\s*\/\^\(\[0[^\n]*\/\s*\)/g,
+      ''
+    );
+
     fs.writeFileSync(clientFilePath, clientCode);
 
     // Format the generated client so `npm run generate` output is prettier-stable and
